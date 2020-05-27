@@ -1,0 +1,23 @@
+---
+# brings up the dependencies
+version: '2'
+services:
+  presto:
+    build: .
+    links:
+      - postgresql
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+
+  postgresql:
+    image: postgres
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: '9bee2c3975024292eff5829526722ac2'
+      POSTGRES_DB: 'postgres'
+    ports:
+      - "5432:5432"
